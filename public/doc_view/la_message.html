@@ -1,5 +1,14 @@
 <div
   id="la_message"
+  ng-bind-html="hitJson | trustAsHtml"  
+  readonly
+  ></div>
+<!--
+
+ng-bind-html="typeof(formatted[field]) === 'undefined' ? hit[field] : formatted[field] | trustAsHtml"
+
+<div
+  id="la_message"
   ng-model="hitJson"
   readonly
   ui-ace="{
@@ -14,3 +23,4 @@
     },
     mode: 'json'
   }"></div>
+-->
