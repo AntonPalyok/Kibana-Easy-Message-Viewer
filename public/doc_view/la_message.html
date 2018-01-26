@@ -1,26 +1,2 @@
-<div
-  id="la_message"
-  ng-bind-html="hitJson | trustAsHtml"  
-  readonly
-  ></div>
-<!--
-
-ng-bind-html="typeof(formatted[field]) === 'undefined' ? hit[field] : formatted[field] | trustAsHtml"
-
-<div
-  id="la_message"
-  ng-model="hitJson"
-  readonly
-  ui-ace="{
-    useWrapMode: true,
-    onLoad: aceLoaded,
-    advanced: {
-      highlightActiveLine: false
-    },
-    rendererOptions: {
-      showPrintMargin: false,
-      maxLines: 4294967296
-    },
-    mode: 'json'
-  }"></div>
--->
+<div class="la_message"></div>
+<!-- attribute: ng-bind-html="hitJson | trustAsHtml" -->

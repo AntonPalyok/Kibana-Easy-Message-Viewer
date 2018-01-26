@@ -1,0 +1,24 @@
+.la_message > .json-viewer {
+	background-color: #fff;
+	border: none;
+	font-size: 12px;
+}
+
+.la_message > .json-viewer a:active, 
+.la_message > .json-viewer a:focus {
+	outline: none !important;
+	border: none !important;
+	-moz-outline-style: none !important;
+	outline: 0 !important;
+	box-shadow:unset;
+}
+
+.la_message > .json-viewer a.list-link:before {
+	content: "-";
+	color: #000;	
+	top: -0.2em;
+}
+
+.la_message > .json-viewer a.list-link.collapsed:before {
+	content: "+";
+}
