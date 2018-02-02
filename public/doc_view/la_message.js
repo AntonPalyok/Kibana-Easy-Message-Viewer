@@ -21,7 +21,7 @@ DocViewsRegistryProvider.register(function () {
 				
 				var resultElement = elem.querySelectorAll(".la_message");
 				var text = $scope.hit._source.message;
-		  
+				
 				if (_.isUndefined(text) || _.isNull(text) || text.toString().length <= 0) {
 					//Nothing to display - message is empty
 					resultElement.append("Nothing to display - message is empty");
@@ -72,7 +72,8 @@ DocViewsRegistryProvider.register(function () {
 					.replace(/</g, '&lt;')
 					.replace(/>/g, '&gt;')
 					.replace(/(https?\:\/\/[\w\.\/\?\=\&\%\#\-\:\;]+)/g, '<a href="$1">$1</a>')
-					.replace(/\r?\n/g, '<br/>');
+					.replace(/\r?\n/g, '<br/>')
+					.replace(/\t/g, '&nbsp;&nbsp;&nbsp;');
 				
 				resultElement.append(rawMessage);
 

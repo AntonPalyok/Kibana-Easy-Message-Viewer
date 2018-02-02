@@ -230,7 +230,7 @@ var JSONViewer = (function() {
 		var txt = value;
 
 		if (type === "string") {
-			txt = '"' + value + '"';
+			txt = '"' + value.replace(/&/g, "&amp;").replace(/"/g, "&quot;").replace(/</g, "&lt;").replace(/>/g, "&gt;") + '"';
 		}
 		else if (value === null) {
 			type = "null";
