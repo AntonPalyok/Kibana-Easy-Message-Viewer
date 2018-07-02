@@ -5,8 +5,10 @@ Plugin for Kibana 6 to display a log document based on it's content either with 
 ## Prerequisites
 ---
 - Node JS
-  Note: NodeJs should be installed with version specified in kibana folder, file .node-version
   Full list of all version: https://nodejs.org/dist/
+
+- Yarn
+  Full list of all versions: https://github.com/yarnpkg/yarn/releases
 
 - Kibana repo should be on same folder level as your plugin folder.
   Name of folder should be just kibana.
@@ -15,14 +17,15 @@ Plugin for Kibana 6 to display a log document based on it's content either with 
 ---
 See the [kibana contributing guide](https://github.com/elastic/kibana/blob/master/CONTRIBUTING.md) for instructions setting up your development environment.
 #### Prepare Kibana environment
-Go to "kibana" repository folder and resolve dependencies:
+Go to "kibana" repository folder and resolve dependencies.
+Note: NodeJs should be installed with version specified in kibana folder, file `.node-version`.
 ```
-npm install
+yarn kbn bootstrap
 ```
 #### Working with plugin
 Once Kibana environment is ready, use the following npm tasks from your plugin folder.
 **Note:** kibana version in package.json of the plugin should match actual version of installed kibana
-
+> On Windows, you'll need you use Git Bash, Cygwin, or a similar shell that exposes the `sh` command.
  - ```npm start```
    Start kibana and have it include this plugin
 
@@ -39,6 +42,17 @@ Once Kibana environment is ready, use the following npm tasks from your plugin f
    Run the server tests using mocha
 
 For more information about any of these commands run `npm run ${task} -- --help`.
+
+Since Kibana 6.3 you can use `yarn` to run tasks:
+- ```yarn start```
+   Start kibana and have it include this plugin
+
+ - `yarn start --elasticsearch.url http://10.0.10.2:9200`
+   Start kibana and provide custom url to elasticsearch
+
+- If you have no Elasticsearch instance then go to kibana folder and run following command in separate command line:
+  `yarn es snapshot`
+  This will download and start local copy of Elasticsearch with version required by kibana.
 
 After starting kibana simply access it in browser by url `http://localhost:5601/`
 
@@ -90,7 +104,22 @@ On prompt enter following information:
 This information will be saved to appropriate files.
 
 
+## Troubleshooting
+---
+#### Kibana shows error after start
+`TypeError: _reactcss.handleHover is not a function`
+Resolved it by starting Kibana from Powershell, not from command line.
+
+#### Yarn shows error during kibana bootstrap command
+```
+Installing dependencies in [@kbn/es]:
+error An unexpected error occurred: "Reduce of empty array with no initial value".
+```
+For the moment latest version of Yarn was 1.7.0.
+I resolved issue by downgrading Yarn to version 1.6.0
+
 ## Useful Links
+---
 - https://www.elastic.co/guide/en/kibana/current/known-plugins.html
 - https://github.com/jimmyjones2/kibana/commit/d7c2fc4417bcb550a1617b9d2818f8faf6cb9aa8
 - https://github.com/sw-jung/kibana_markdown_doc_view

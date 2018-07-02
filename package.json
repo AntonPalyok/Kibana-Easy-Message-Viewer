@@ -1,10 +1,10 @@
 {
   "name": "la_message_view",
-  "version": "6.1.1",
+  "version": "6.3.1",
   "description": "Kibana plugin to display a log document based on it's content either with custom JSON viewer plugin or as a plain text",
   "main": "index.js",
   "kibana": {
-    "version": "6.1.1"
+    "version": "6.3.1"
   },
   "scripts": {
     "lint": "eslint",
