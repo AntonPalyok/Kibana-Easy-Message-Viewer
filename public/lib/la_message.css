@@ -1,7 +1,16 @@
+.la_message_view {
+	padding: 0 7px;
+}
+
+.la_message_toolbar {
+	margin-bottom: 5px;
+}
+
 .la_message > .json-viewer {
 	background-color: #fff;
 	border: none;
 	font-size: 12px;
+	margin-left: -7px;
 }
 
 .la_message > .json-viewer a:active, 

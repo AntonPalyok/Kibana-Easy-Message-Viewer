@@ -32,7 +32,7 @@ DocViewsRegistryProvider.register(function () {
 				// Check if Message contains JSON
 				var looksLikeJson = false;
 				var tmpInd = 0;
-		
+				
 				if (text[0] === "{") {
 					looksLikeJson = true;
 				}
@@ -61,6 +61,8 @@ DocViewsRegistryProvider.register(function () {
 						jsonViewer.showJSON(jsonObj, null, expandLevel);
 						resultElement.append(jsonViewer.getContainer());
 						
+						InitializeToolbarWithJson($scope, elem, jsonObj);
+						
 						return;
 					}
 				}
@@ -74,10 +76,73 @@ DocViewsRegistryProvider.register(function () {
 					.replace(/(https?\:\/\/[\w\.\/\?\=\&\%\#\-\:\;]+)/g, '<a href="$1">$1</a>')
 					.replace(/\r?\n/g, '<br/>')
 					.replace(/\t/g, '&nbsp;&nbsp;&nbsp;');
-				
+			
 				resultElement.append(rawMessage);
-
+				
+				InitializeToolbarWithText($scope, elem);
 			}
 		}
 	};
 });
+
+
+function InitializeToolbarWithJson($scope, elem, jsonObj) {
+	
+	var messageFactory = function() {
+		var copyObj = $.extend({}, $scope.hit._source);
+		copyObj.message = jsonObj;
+		var message = JSON.stringify(copyObj, null, 4)
+			.replace(/\r?\n/g, '\r\n'); //normalize to windows style
+		
+		return message;
+	};
+	
+	InitializeToolbar(elem, messageFactory);
+}
+
+function InitializeToolbarWithText($scope, elem) {
+	
+	var messageFactory = function(){
+		var copyObj = $.extend({}, $scope.hit._source);
+		
+		var logMessage = copyObj.message;
+		
+		delete copyObj.message;
+		
+		var additionalInfo = JSON.stringify(copyObj, null, 4)
+			.replace(/\r?\n/g, '\r\n'); //normalize to windows style
+		
+		var message = logMessage + "\r\n" + additionalInfo;
+		
+		return message;
+	};
+	
+	InitializeToolbar(elem, messageFactory);
+}
+
+function InitializeToolbar(elem, messageFactory) {
+	// Button Copy
+	var btnCopy = elem.querySelectorAll("[data-la-action=copy]");
+	
+	$(btnCopy).click(function(){
+		var message = messageFactory();
+		copyToClipboard(message);
+	});
+}
+
+function copyToClipboard(str) {
+	
+	var el = document.createElement('textarea');
+	el.value = str;
+	
+	// Set non-editable to avoid focus and move outside of view
+	el.setAttribute('readonly', '');
+	el.style = {position: 'absolute', left: '-9999px'};
+	
+	document.body.appendChild(el);
+	
+	el.select();
+	document.execCommand('copy');
+	
+	document.body.removeChild(el);
+}
